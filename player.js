@@ -5,25 +5,30 @@ const categoryButtons = document.querySelectorAll('#categories button');
 
 let songs = [];
 
-fileInput.addEventListener('change', (e) => {
+fileInput.addEventListener('change', async (e) => {
   const files = Array.from(e.target.files);
-  files.forEach(file => {
+  for (const file of files) {
+    const arrayBuffer = await file.arrayBuffer();
     const song = {
       name: file.name,
-      url: URL.createObjectURL(file),
-      category: detectCategory(file.name)
+      blob: arrayBuffer,
+      category: detectCategory(file.name),
+      type: file.type
     };
     songs.push(song);
-  });
-  saveSongsToDB(songs);
+  }
+  await saveSongsToDB(songs);
   renderSongs();
 });
 
-songList.addEventListener('click', (e) => {
+songList.addEventListener('click', async (e) => {
   if (e.target.tagName === 'LI') {
     const index = e.target.getAttribute('data-index');
-    if (songs[index]) {
-      audioPlayer.src = songs[index].url;
+    const song = songs[index];
+    if (song) {
+      const blob = new Blob([song.blob], { type: song.type });
+      const url = URL.createObjectURL(blob);
+      audioPlayer.src = url;
       audioPlayer.play();
     }
   }
