@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BharatVerse Music Player</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="player-container">
+    <h1>BharatVerse Music Player</h1>
+    <input type="file" id="fileInput" accept="audio/*" multiple />
+    <div id="categories">
+      <button data-category="All">All</button>
+      <button data-category="Bhajan">Bhajan</button>
+      <button data-category="Songs">Songs</button>
+      <button data-category="Instrumental">Instrumental</button>
+    </div>
+    <ul id="songList"></ul>
+    <audio id="audioPlayer" controls></audio>
+  </div>
+  <script src="storage.js"></script>
+  <script src="player.js"></script>
+</body>
+</html>
